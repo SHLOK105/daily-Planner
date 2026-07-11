@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Planner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="dot"></span>Daily<span class="gradtext">planner</span></div>
+  <div class="clock-block">
+    <div class="clock-time" id="clockTime">--:--:--</div>
+    <div class="clock-date" id="clockDate">loading...</div>
+  </div>
+  <button class="notif-btn" id="notifBtn">🔔 enable alerts</button>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-view="planner"><span class="idx">01</span>Daily Planner</button>
+   <button data-view="schedule"><span class="idx">02</span>Schedule</button>
+  <button data-view="weekly"><span class="idx">03</span>Weekly Todo</button>
+  <button data-view="notes"><span class="idx">04</span>Notepad</button>
+</nav>
+
+<main>
+
+  <!-- ===== VIEW 1: DAILY PLANNER ===== -->
+  <section class="view active" id="view-planner">
+    <h2 class="section-title">Study / Daily Alerts</h2>
+    <div class="panel">
+      <div class="form-row">
+        <input type="text" id="alertLabel" placeholder="e.g. Study start karo, Gym time...">
+
+       <div class="time-picker" id="alertTimePicker">
+      <input type="number" id="alertHour" min="1" max="12" placeholder="12" value="12">
+       <span class="colon">:</span>
+       <input type="number" id="alertMin" min="0" max="59" placeholder="00" value="00">
+       <div class="ampm-toggle" id="alertAmPm">
+       <button type="button" class="ampm-btn active" data-val="AM">AM</button>
+       <button type="button" class="ampm-btn" data-val="PM">PM</button>
+       </div>
+       </div>
+
+        <button class="primary" id="addAlertBtn">+ Add Alert</button>
+      </div>
+      <div id="alertList"></div>
+      <div class="empty-state" id="alertEmpty">Koi alert set nahi hai. Upar se time set karo — jaise 11:00 study start.</div>
+    </div>
+  </section>
+
+<!-- ===== VIEW: AAJ KA SCHEDULE ===== -->
+<section class="view" id="view-schedule">
+  <div class="week-header">
+    <h2 class="section-title" style="margin-bottom:0">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--grad);margin-right:8px;"></span>Aaj ka Schedule
+    </h2>
+    <span class="week-range" id="scheduleCount">0/0</span>
+  </div>
+  <div class="panel">
+    <div class="form-row">
+      <input type="text" id="scheduleLabel" placeholder="e.g. Uthna aur fresh hona">
+    </div>
+    <div class="form-row" style="align-items:center;">
+      <div class="time-picker" id="scheduleStartWrap">
+        <input type="number" id="scheduleStartHour" min="1" max="12" placeholder="--">
+        <span class="colon">:</span>
+        <input type="number" id="scheduleStartMin" min="0" max="59" placeholder="--">
+        <div class="ampm-toggle" id="scheduleStartAmPm">
+          <button type="button" class="ampm-btn active" data-val="AM">AM</button>
+          <button type="button" class="ampm-btn" data-val="PM">PM</button>
+        </div>
+      </div>
+      <span style="color:var(--text-dim); font-family:var(--mono); font-size:12px;">to</span>
+      <div class="time-picker" id="scheduleEndWrap">
+        <input type="number" id="scheduleEndHour" min="1" max="12" placeholder="--">
+        <span class="colon">:</span>
+        <input type="number" id="scheduleEndMin" min="0" max="59" placeholder="--">
+        <div class="ampm-toggle" id="scheduleEndAmPm">
+          <button type="button" class="ampm-btn active" data-val="AM">AM</button>
+          <button type="button" class="ampm-btn" data-val="PM">PM</button>
+        </div>
+      </div>
+      <button class="primary" id="addScheduleBtn">+ Add</button>
+    </div>
+    <div id="scheduleList"></div>
+    <div class="empty-state" id="scheduleEmpty">Koi schedule item nahi hai. Time range aur kaam add karo — jaise 6:00 se 6:30, "Uthna aur fresh hona".</div>
+  </div>
+</section>
+
+  <!-- ===== VIEW 2: WEEKLY TODO ===== -->
+  <section class="view" id="view-weekly">
+    <div class="week-header">
+      <h2 class="section-title" style="margin-bottom:0">Weekly Todo <span style="color:var(--text-faint); font-weight:400; text-transform:none; letter-spacing:0;">(Sunday ko poora week plan karo)</span></h2>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span class="week-range" id="weekRange"></span>
+        <button class="ghost" id="resetWeekBtn">↻ New Week (clear all)</button>
+      </div>
+    </div>
+    <div class="week-grid" id="weekGrid"></div>
+  </section>
+
+  <!-- ===== VIEW 3: NOTEPAD ===== -->
+  <section class="view" id="view-notes">
+    <h2 class="section-title">Notepad</h2>
+    <div class="panel notepad-wrap">
+      <span class="save-indicator" id="saveIndicator">✓ saved</span>
+      <textarea id="notepad" placeholder="Kuch bhi likho... ideas, reminders, random thoughts. Auto-save ho jayega."></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>DayFlow — sab kuch is browser me hi save hota hai (localStorage). Tab band mat karo agar alerts chahiye.</footer>
+
+<div id="toast-wrap"></div>
+
+<audio id="alertSound" src="alex_jauk-spaceship-security-alert-433830.mp3" preload="auto"></audio>
+
+<script src="script.js"></script>
+
+</body>
+</html>
